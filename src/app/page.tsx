@@ -375,6 +375,9 @@ export default function App() {
             <a href="#security" className="hover:text-cyan-600 transition-colors">
               Security & Geo
             </a>
+            <a href="#pricing" className="hover:text-cyan-600 transition-colors">
+              Pricing
+            </a>
             <a href="#contact" className="hover:text-cyan-600 transition-colors">
               Contact Us
             </a>
@@ -388,6 +391,12 @@ export default function App() {
               <QrCode className="w-4 h-4 text-cyan-600" />
               Scan QR
             </button>
+            <a
+              href="/get-started"
+              className="px-4 py-2 rounded-lg bg-slate-900 text-white font-bold text-xs hover:bg-slate-800 transition-all"
+            >
+              Get started
+            </a>
             <a
               href="#download"
               className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold text-xs hover:brightness-110 shadow-lg shadow-emerald-500/30 transition-all relative overflow-hidden group"
@@ -424,6 +433,20 @@ export default function App() {
               className="px-2 py-1.5 text-sm text-slate-600 hover:text-slate-900"
             >
               App Modules
+            </a>
+            <a
+              href="#pricing"
+              onClick={() => setMobileMenuOpen(false)}
+              className="px-2 py-1.5 text-sm text-slate-600 hover:text-slate-900"
+            >
+              Pricing
+            </a>
+            <a
+              href="/get-started"
+              onClick={() => setMobileMenuOpen(false)}
+              className="px-2 py-2 rounded-lg bg-slate-900 text-white font-bold text-sm text-center"
+            >
+              Get started
             </a>
             <a
               href="#download"
@@ -1036,7 +1059,30 @@ export default function App() {
         </div>
       </section>
 
-      {}
+      <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">Simple company pricing</h2>
+          <p className="mt-3 text-slate-600">No setup fee. Face and GPS are included from Professional. Annual billing is 20% off.</p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-3">
+          {[
+            ["Essential", "₹1,499", "25 staff included", "₹30 per extra employee", "Attendance, leave, holidays, and approvals."],
+            ["Professional", "₹2,999", "50 staff included", "₹50 per extra employee", "Face check-in, GPS geofence, shifts, and payslips."],
+            ["Enterprise", "₹5,999", "100 staff included", "₹75 per extra employee", "Expenses, helpdesk, referrals, and a 4-hour SLA."],
+          ].map(([name, price, seats, extra, detail]) => (
+            <a key={name} href="/get-started" className={`rounded-2xl border bg-white p-6 shadow-sm ${name === "Professional" ? "border-cyan-500 ring-2 ring-cyan-100" : "border-slate-200"}`}>
+              {name === "Professional" && <p className="text-xs font-bold uppercase tracking-wide text-cyan-700">Most popular</p>}
+              <h3 className="mt-1 text-xl font-bold text-slate-900">{name}</h3>
+              <p className="mt-3 text-3xl font-extrabold text-slate-900">{price}<span className="text-base font-semibold text-slate-500"> / month</span></p>
+              <p className="mt-3 text-sm text-slate-600">{seats}</p>
+              <p className="text-sm text-slate-600">{extra}</p>
+              <p className="mt-3 text-sm text-slate-500">{detail}</p>
+            </a>
+          ))}
+        </div>
+        <p className="mt-6 text-center text-sm text-slate-500">14-day pilot for 10 employees, no card. Annual payment is 20% off the year.</p>
+      </section>
+
       <section id="download" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center relative">
         {/* Soft Background Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-64 bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none -z-10"></div>
