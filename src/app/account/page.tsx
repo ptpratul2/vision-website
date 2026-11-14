@@ -37,6 +37,7 @@ export default function AccountPage() {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [codeSent, setCodeSent] = useState(false);
+  const [notice, setNotice] = useState("");
   const [account, setAccount] = useState<Account | null>(null);
   const [planName, setPlanName] = useState("Professional");
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
@@ -92,6 +93,11 @@ export default function AccountPage() {
         return;
       }
       setCodeSent(true);
+      setNotice(
+        data.already_sent
+          ? "Use the code already sent to this email. A new code is available after one minute."
+          : "Enter the code from your email. It expires in 10 minutes."
+      );
     } catch {
       setError("The sign-in code could not be sent.");
     } finally {
@@ -224,63 +230,88 @@ export default function AccountPage() {
       <section className="mx-auto max-w-5xl px-6 py-12">
         <h1 className="text-3xl font-extrabold tracking-tight">Your company account</h1>
         <p className="mt-2 max-w-2xl text-slate-600">
-          Enter the company code and the admin email used at registration. We email a code, then you can see the plan and change it without creating another company.
+          {account
+            ? "Review this workspace, or choose another plan. The company code stays the same."
+            : "Enter the company code and the admin email used at registration. We email a code, then you can see the plan and change it without creating another company."}
         </p>
 
         {account ? (
-          <div className="mt-8 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="mt-8 grid items-start gap-6 lg:grid-cols-2">
+            <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
               <p className="text-sm font-semibold uppercase tracking-wide text-cyan-700">Company code</p>
-              <p className="mt-2 text-3xl font-extrabold">{account.company_code}</p>
+              <p className="mt-2 text-3xl font-extrabold tracking-tight">{account.company_code}</p>
               <p className="mt-1 text-slate-600">{account.client_name}</p>
-              <dl className="mt-6 grid gap-3 text-sm">
-                <div><dt className="text-slate-500">Plan</dt><dd className="font-semibold">{account.plan} · {account.billing_cycle}</dd></div>
-                <div><dt className="text-slate-500">Status</dt><dd className="font-semibold">{account.status}</dd></div>
-                <div><dt className="text-slate-500">Seats</dt><dd className="font-semibold">{account.seat_limit}</dd></div>
-                <div><dt className="text-slate-500">Valid until</dt><dd className="font-semibold">{account.valid_until || "—"}</dd></div>
-                <div><dt className="text-slate-500">Workspace</dt><dd className="font-semibold break-all">{account.client_domain}</dd></div>
+              <dl className="mt-6 border-t border-slate-100 text-sm">
+                {[
+                  ["Plan", `${account.plan} · ${account.billing_cycle}`],
+                  ["Status", account.status],
+                  ["Seats", String(account.seat_limit)],
+                  ["Valid until", account.valid_until || "—"],
+                  ["Workspace", account.client_domain],
+                ].map(([label, value]) => (
+                  <div key={label} className="grid grid-cols-[7.5rem_minmax(0,1fr)] items-baseline gap-3 border-b border-slate-100 py-3">
+                    <dt className="text-slate-500">{label}</dt>
+                    <dd className={`font-semibold ${label === "Workspace" ? "break-all" : ""}`}>{value}</dd>
+                  </div>
+                ))}
               </dl>
-              <button type="button" onClick={signOut} className="mt-6 text-sm font-semibold text-slate-500">Sign out</button>
-            </div>
+              <button type="button" onClick={signOut} className="mt-6 text-left text-sm font-semibold text-slate-500">
+                Sign out
+              </button>
+            </section>
 
-            <div className="space-y-4">
-              <div className="flex gap-2">
+            <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+              <p className="text-sm font-semibold uppercase tracking-wide text-cyan-700">Plans</p>
+              <p className="mt-2 text-3xl font-extrabold tracking-tight">Choose a plan</p>
+              <p className="mt-1 text-slate-600">Payment confirms the change. The company code stays the same.</p>
+              <div className="mt-6 inline-flex rounded-full border border-slate-200 bg-slate-50 p-1">
                 {(["monthly", "annual"] as const).map((option) => (
                   <button
                     key={option}
                     type="button"
                     onClick={() => setBilling(option)}
-                    className={`rounded-full px-4 py-2 text-sm font-semibold ${billing === option ? "bg-cyan-600 text-white" : "bg-white text-slate-600 border border-slate-200"}`}
+                    className={`rounded-full px-4 py-2 text-sm font-semibold ${billing === option ? "bg-cyan-600 text-white" : "text-slate-600"}`}
                   >
                     {option === "monthly" ? "Monthly" : "Annual · 20% off"}
                   </button>
                 ))}
               </div>
-              {plans.map((plan) => (
+              <div className="mt-4 grid gap-3">
+                {plans.map((plan) => {
+                  const current = plan.plan_name === account.plan && billing === account.billing_cycle;
+                  return (
+                    <button
+                      key={plan.plan_name}
+                      type="button"
+                      onClick={() => setPlanName(plan.plan_name)}
+                      className={`w-full rounded-xl border p-4 text-left ${planName === plan.plan_name ? "border-cyan-500 bg-cyan-50" : "border-slate-200 bg-white"}`}
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <span className="text-lg font-bold">
+                          {plan.plan_name}
+                          {current && (
+                            <span className="ml-2 align-middle rounded-full bg-slate-200 px-2 py-0.5 text-xs font-semibold text-slate-700">Current</span>
+                          )}
+                        </span>
+                        <span className="shrink-0 text-right font-semibold text-cyan-800">{priceLabel(plan)}</span>
+                      </div>
+                      <p className="mt-2 text-sm leading-6 text-slate-600">{plan.description}</p>
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="mt-5">
+                {error && <p className="mb-4 text-sm font-medium text-red-600">{error}</p>}
                 <button
-                  key={plan.plan_name}
                   type="button"
-                  onClick={() => setPlanName(plan.plan_name)}
-                  className={`w-full rounded-2xl border p-5 text-left ${planName === plan.plan_name ? "border-cyan-500 bg-cyan-50" : "border-slate-200 bg-white"}`}
+                  disabled={loading || !plans.length || (planName === account.plan && billing === account.billing_cycle)}
+                  onClick={changePlan}
+                  className="w-full rounded-lg bg-cyan-600 px-4 py-3 font-bold text-white disabled:opacity-50"
                 >
-                  <div className="flex items-center justify-between gap-4">
-                    <span className="text-lg font-bold">{plan.plan_name}</span>
-                    <span className="font-semibold text-cyan-800">{priceLabel(plan)}</span>
-                  </div>
-                  <p className="mt-2 text-sm text-slate-600">{plan.description}</p>
+                  {loading ? "Please wait..." : planName === account.plan && billing === account.billing_cycle ? "Current plan" : "Change plan"}
                 </button>
-              ))}
-              {error && <p className="text-sm font-medium text-red-600">{error}</p>}
-              <button
-                type="button"
-                disabled={loading || !plans.length}
-                onClick={changePlan}
-                className="w-full rounded-lg bg-cyan-600 px-4 py-3 font-bold text-white disabled:opacity-50"
-              >
-                {loading ? "Please wait..." : "Change plan"}
-              </button>
-              <p className="text-sm text-slate-500">The company code stays the same. The new plan starts after Razorpay confirms the payment.</p>
-            </div>
+              </div>
+            </section>
           </div>
         ) : (
           <form onSubmit={codeSent ? verifyCode : sendCode} className="mt-8 max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -295,6 +326,7 @@ export default function AccountPage() {
                 <input required inputMode="numeric" value={otp} onChange={(event) => setOtp(event.target.value)} className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 font-normal tracking-widest" />
               </label>
             )}
+            {notice && <p className="mt-4 text-sm text-slate-600">{notice}</p>}
             {error && <p className="mt-4 text-sm font-medium text-red-600">{error}</p>}
             <button disabled={loading} className="mt-6 w-full rounded-lg bg-cyan-600 px-4 py-3 font-bold text-white disabled:opacity-50">
               {loading ? "Please wait..." : codeSent ? "Open account" : "Email me a code"}
