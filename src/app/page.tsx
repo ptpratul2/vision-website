@@ -392,6 +392,12 @@ export default function App() {
               Scan QR
             </button>
             <a
+              href="/account"
+              className="px-3 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900"
+            >
+              Account
+            </a>
+            <a
               href="/get-started"
               className="px-4 py-2 rounded-lg bg-slate-900 text-white font-bold text-xs hover:bg-slate-800 transition-all"
             >
@@ -440,6 +446,13 @@ export default function App() {
               className="px-2 py-1.5 text-sm text-slate-600 hover:text-slate-900"
             >
               Pricing
+            </a>
+            <a
+              href="/account"
+              onClick={() => setMobileMenuOpen(false)}
+              className="px-2 py-1.5 text-sm font-semibold text-slate-700"
+            >
+              Account
             </a>
             <a
               href="/get-started"

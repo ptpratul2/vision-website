@@ -27,10 +27,18 @@ export function hqGet(methodAndQuery: string) {
   return callHq(`${HQ}${methodAndQuery}`);
 }
 
-export function hqPost(method: string, body: unknown) {
+export function hqPost(
+  method: string,
+  body: unknown,
+  headers?: Record<string, string>
+) {
   return callHq(`${HQ}${method}`, {
     method: "POST",
-    headers: { Accept: "application/json", "Content-Type": "application/json" },
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      ...headers,
+    },
     body: JSON.stringify(body),
   });
 }

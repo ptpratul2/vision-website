@@ -170,7 +170,10 @@ export default function GetStartedPage() {
       <nav className="border-b border-slate-200 bg-white px-6 py-4">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
           <a href="/" className="text-xl font-extrabold tracking-tight">Vision</a>
-          <a href="/#download" className="text-sm font-semibold text-cyan-700">Get the app</a>
+          <div className="flex items-center gap-5">
+            <a href="/account" className="text-sm font-semibold text-slate-600">Account</a>
+            <a href="/#download" className="text-sm font-semibold text-cyan-700">Get the app</a>
+          </div>
         </div>
       </nav>
 
