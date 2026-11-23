@@ -265,6 +265,7 @@ export default function App() {
       category: 'hr',
       description: 'Request compensatory leaves for weekend duty.'
     },
+    /*
     {
       id: 'refer',
       title: 'Refer',
@@ -276,6 +277,7 @@ export default function App() {
       category: 'support',
       description: 'Refer candidates and track interview updates.'
     }
+    */
   ];
 
   const filteredModules =
@@ -320,33 +322,26 @@ export default function App() {
             <p className="text-sm text-slate-400 mb-6">
               Scan this QR code with your mobile camera to immediately download the Vision APK or App store build.
             </p>
-            {/* SVG QR Code Simulation */}
-            <div className="bg-white p-4 rounded-xl inline-block mb-4 shadow-inner">
-              <svg className="w-44 h-44 mx-auto text-black" viewBox="0 0 100 100" fill="currentColor">
-                <rect x="0" y="0" width="30" height="30" />
-                <rect x="5" y="5" width="20" height="20" fill="white" />
-                <rect x="10" y="10" width="10" height="10" />
-
-                <rect x="70" y="0" width="30" height="30" />
-                <rect x="75" y="5" width="20" height="20" fill="white" />
-                <rect x="80" y="10" width="10" height="10" />
-
-                <rect x="0" y="70" width="30" height="30" />
-                <rect x="5" y="75" width="20" height="20" fill="white" />
-                <rect x="10" y="80" width="10" height="10" />
-
-                <rect x="36" y="10" width="8" height="8" />
-                <rect x="48" y="14" width="12" height="6" />
-                <rect x="36" y="36" width="28" height="8" />
-                <rect x="42" y="50" width="16" height="16" />
-                <rect x="70" y="38" width="10" height="20" />
-                <rect x="84" y="64" width="8" height="16" />
-                <rect x="14" y="44" width="10" height="10" />
-                <rect x="34" y="76" width="16" height="14" />
-                <rect x="62" y="80" width="22" height="10" />
-              </svg>
+            {/* Real QR Code */}
+            <div className="bg-white p-4 rounded-xl inline-block mb-4 shadow-inner border border-slate-100">
+              <img
+                src="/qrcode.png"
+                alt="Scan QR to download Vision APK"
+                className="w-48 h-48 mx-auto object-contain"
+              />
             </div>
-            <div className="text-xs text-slate-400">Compatible with Android 8.0+ & iOS 14.0+</div>
+            <div className="text-xs text-slate-400 mb-2">Compatible with Android 8.0+ & iOS 14.0+</div>
+            <div className="text-xs text-slate-500">
+              Direct Link:{' '}
+              <a
+                href="https://tinyurl.com/mrxebe3h"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-cyan-600 font-semibold hover:underline"
+              >
+                Download APK
+              </a>
+            </div>
           </div>
         </div>
       )}
@@ -385,8 +380,8 @@ export default function App() {
 
           <div className="hidden md:flex items-center gap-3">
             <button
-              onClick={() => triggerDownloadNotice('QR Scanner')}
-              className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-white border border-slate-300/80 text-xs font-semibold text-slate-600 hover:text-slate-900 hover:border-slate-500 transition-all"
+              onClick={() => setShowQrModal(true)}
+              className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-white border border-slate-300/80 text-xs font-semibold text-slate-600 hover:text-slate-900 hover:border-slate-500 transition-all cursor-pointer"
             >
               <QrCode className="w-4 h-4 text-cyan-600" />
               Scan QR
@@ -510,8 +505,10 @@ export default function App() {
 
             {/* Download Buttons Group */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-8">
-              <button
-                onClick={() => triggerDownloadNotice('Android APK')}
+              <a
+                href="https://tinyurl.com/mrxebe3h"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-full sm:w-auto flex items-center justify-center gap-3 px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold text-sm hover:brightness-110 shadow-xl shadow-emerald-500/30 transition-all group relative overflow-hidden"
               >
                 <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shimmer_2.5s_linear_infinite]" />
@@ -524,7 +521,7 @@ export default function App() {
                     <div className="text-sm font-extrabold leading-none">Android APK / Play Store</div>
                   </div>
                 </div>
-              </button>
+              </a>
 
               <button
                 onClick={() => triggerDownloadNotice('iOS App Store')}
@@ -537,8 +534,8 @@ export default function App() {
               </button>
 
               <button
-                onClick={() => triggerDownloadNotice('QR Scanner')}
-                className="p-3.5 rounded-xl bg-white/80 border border-slate-200 hover:border-slate-400 text-cyan-600 hover:text-slate-900 transition-all"
+                onClick={() => setShowQrModal(true)}
+                className="p-3.5 rounded-xl bg-white/80 border border-slate-200 hover:border-slate-400 text-cyan-600 hover:text-slate-900 transition-all cursor-pointer"
                 title="Scan QR to download"
               >
                 <QrCode className="w-5 h-5" />
@@ -1122,8 +1119,10 @@ export default function App() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
-            <button
-              onClick={() => triggerDownloadNotice('Android APK')}
+            <a
+              href="https://tinyurl.com/mrxebe3h"
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-extrabold text-sm hover:brightness-110 shadow-xl shadow-emerald-500/25 transition-all group relative overflow-hidden"
             >
               <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shimmer_2.5s_linear_infinite]" />
@@ -1131,7 +1130,7 @@ export default function App() {
                 <Download className="w-5 h-5" />
                 <span>Download Android APK (Direct)</span>
               </div>
-            </button>
+            </a>
 
             <button
               onClick={() => triggerDownloadNotice('iOS TestFlight / Store')}
@@ -1141,8 +1140,8 @@ export default function App() {
             </button>
 
             <button
-              onClick={() => triggerDownloadNotice('QR Scanner')}
-              className="flex items-center gap-2 px-5 py-4 rounded-xl bg-white border border-slate-200 text-cyan-600 hover:text-slate-900 transition-all text-sm font-semibold"
+              onClick={() => setShowQrModal(true)}
+              className="flex items-center gap-2 px-5 py-4 rounded-xl bg-white border border-slate-200 text-cyan-600 hover:text-slate-900 transition-all text-sm font-semibold cursor-pointer"
             >
               <QrCode className="w-5 h-5" />
               <span>Scan QR Code</span>
@@ -1236,7 +1235,7 @@ export default function App() {
             <a href="#modules" className="hover:text-slate-600 transition-colors">
               Modules
             </a>
-            <button onClick={() => triggerDownloadNotice('QR Scanner')} className="hover:text-slate-600 transition-colors">
+            <button onClick={() => setShowQrModal(true)} className="hover:text-slate-600 transition-colors cursor-pointer">
               QR Code
             </button>
             <a href="#download" className="hover:text-slate-600 transition-colors">
