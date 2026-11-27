@@ -320,26 +320,26 @@ export default function App() {
             </div>
             <h3 className="text-xl font-bold text-slate-900 mb-1">Scan to Download</h3>
             <p className="text-sm text-slate-400 mb-6">
-              Scan this QR code with your mobile camera to immediately download the Vision APK or App store build.
+              Scan this QR code with your mobile camera to immediately download Vision from Google Play Store.
             </p>
             {/* Real QR Code */}
             <div className="bg-white p-4 rounded-xl inline-block mb-4 shadow-inner border border-slate-100">
               <img
                 src="/qrcode.png"
-                alt="Scan QR to download Vision APK"
+                alt="Scan QR to download Vision on Google Play Store"
                 className="w-48 h-48 mx-auto object-contain"
               />
             </div>
             <div className="text-xs text-slate-400 mb-2">Compatible with Android 8.0+ & iOS 14.0+</div>
             <div className="text-xs text-slate-500">
-              Direct Link:{' '}
+              Play Store Link:{' '}
               <a
-                href="https://tinyurl.com/mrxebe3h"
+                href="https://play.google.com/store/apps/details?id=in.octavision.vision"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-cyan-600 font-semibold hover:underline"
               >
-                Download APK
+                Open on Google Play
               </a>
             </div>
           </div>
@@ -506,7 +506,7 @@ export default function App() {
             {/* Download Buttons Group */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-8">
               <a
-                href="https://tinyurl.com/mrxebe3h"
+                href="https://play.google.com/store/apps/details?id=in.octavision.vision"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto flex items-center justify-center gap-3 px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold text-sm hover:brightness-110 shadow-xl shadow-emerald-500/30 transition-all group relative overflow-hidden"
@@ -1078,7 +1078,7 @@ export default function App() {
           {[
             ["Essential", "₹1,499", "25 staff included", "₹30 per extra employee", "Attendance, leave, holidays, and approvals."],
             ["Professional", "₹2,999", "50 staff included", "₹50 per extra employee", "Face check-in, GPS geofence, shifts, and payslips."],
-            ["Enterprise", "₹5,999", "100 staff included", "₹75 per extra employee", "Expenses, helpdesk, referrals, and a 4-hour SLA."],
+            ["Enterprise", "₹5,999", "100 staff included", "₹75 per extra employee", "Expenses, helpdesk, and a 4-hour SLA."],
           ].map(([name, price, seats, extra, detail]) => (
             <a key={name} href="/get-started" className={`rounded-2xl border bg-white p-6 shadow-sm ${name === "Professional" ? "border-cyan-500 ring-2 ring-cyan-100" : "border-slate-200"}`}>
               {name === "Professional" && <p className="text-xs font-bold uppercase tracking-wide text-cyan-700">Most popular</p>}
@@ -1120,7 +1120,7 @@ export default function App() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
             <a
-              href="https://tinyurl.com/mrxebe3h"
+              href="https://play.google.com/store/apps/details?id=in.octavision.vision"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-extrabold text-sm hover:brightness-110 shadow-xl shadow-emerald-500/25 transition-all group relative overflow-hidden"
@@ -1128,7 +1128,7 @@ export default function App() {
               <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-[shimmer_2.5s_linear_infinite]" />
               <div className="relative z-10 flex items-center justify-center gap-3">
                 <Download className="w-5 h-5" />
-                <span>Download Android APK (Direct)</span>
+                <span>Download on Google Play</span>
               </div>
             </a>
 
